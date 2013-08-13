@@ -107,5 +107,32 @@ namespace Dapper.ColumnMapper.Tests
             return connection.Query<ColumnMappingObject>(selectSql).FirstOrDefault();
         }
 
+        [Test]
+        public void Can_Register_Single_Type()
+        {
+            ColumnTypeMapper.RegisterForTypes(typeof (DateTime));
+
+            var map = SqlMapper.GetTypeMap(typeof(DateTime));
+
+            map.Should().NotBeNull();
+            map.Should().BeOfType<ColumnTypeMapper>();
+        }
+
+        [Test]
+        public void Can_Register_Multiple_Types()
+        {
+            ColumnTypeMapper.RegisterForTypes(typeof(DateTime), typeof(TimeSpan));
+
+            var dateTimeMap = SqlMapper.GetTypeMap(typeof (DateTime));
+
+            dateTimeMap.Should().NotBeNull();
+            dateTimeMap.Should().BeOfType<ColumnTypeMapper>();
+
+            var timeSpanMap = SqlMapper.GetTypeMap(typeof (TimeSpan));
+
+            timeSpanMap.Should().NotBeNull();
+            timeSpanMap.Should().BeOfType<ColumnTypeMapper>();
+        }
+
     }
 }
