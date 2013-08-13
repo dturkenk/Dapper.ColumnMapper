@@ -20,21 +20,21 @@ How?
 
 Using the ColumnMapper is a two step process.
 
-First, decorate the target properties with the `[ColumnMapping('Foo')]` attribute, where 'Foo' is the name of the column in the result set. _Note: You can skip this step if you're just trying to take advantage of the case-insensitive mapping provided by the ColumnMapper.
+First, decorate the target properties with the `[ColumnMapping('Foo')]` attribute, where 'Foo' is the name of the column in the result set. _Note: You can skip this step if you're just trying to take advantage of the case-insensitive mapping provided by the ColumnMapper._
 
 Second, register the `ColumnTypeMapper` with Dapper for the target object types. 
 
 You can use the traditional Dapper method:
 
-'''C#
+```C#
 	 SqlMapper.SetTypeMap(typeof(Bar), new ColumnTypeMapper(typeof(Bar)));
-'''
+````
 
 Or the provided convenience method that lets you register multiple types at once:
 
-'''C#
+```C#
 	ColumnTypeMapper.RegisterForTypes(typeof(Bar), typeof(Baz));
-'''
+```
 
 Where?
 ------
