@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using FluentAssertions;
+using NUnit.Framework;
 
 namespace Dapper.ColumnMapper.Tests
 {
@@ -15,17 +12,21 @@ namespace Dapper.ColumnMapper.Tests
     {
         private SqlConnection connection;
 
-        public static readonly string connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=tempdb;Integrated Security=True";
+        public static readonly string connectionString = "Data Source=localhost;Initial Catalog=tempdb;Integrated Security=True";
 
         public class ColumnMappingObject
         {
             public string DefaultColumn { get; set; }
+
             public string NonMatchingColumn { get; set; }
-            [ColumnMapping("MappedCol")] public string MappedColumn { get; set; }
+
+            [ColumnMapping("MappedCol")]
+            public string MappedColumn { get; set; }
+
             public string MiscasedColumn { get; set; }
         }
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void Setup()
         {
             connection = new SqlConnection(connectionString);
@@ -46,7 +47,7 @@ namespace Dapper.ColumnMapper.Tests
             connection.Execute(createSql);
         }
 
-        [TestFixtureTearDown]
+        [TearDown]
         public void TearDown()
         {
             if (connection != null && connection.State == ConnectionState.Open)
@@ -97,7 +98,6 @@ namespace Dapper.ColumnMapper.Tests
             selectedObject.Should().NotBeNull();
             selectedObject.MiscasedColumn.Should().NotBeNullOrEmpty();
             selectedObject.MiscasedColumn.Should().Be("MiscasedColumn1");
-
         }
 
         private ColumnMappingObject SelectObjects()
@@ -110,7 +110,7 @@ namespace Dapper.ColumnMapper.Tests
         [Test]
         public void Can_Register_Single_Type()
         {
-            ColumnTypeMapper.RegisterForTypes(typeof (DateTime));
+            ColumnTypeMapper.RegisterForTypes(typeof(DateTime));
 
             var map = SqlMapper.GetTypeMap(typeof(DateTime));
 
@@ -123,16 +123,15 @@ namespace Dapper.ColumnMapper.Tests
         {
             ColumnTypeMapper.RegisterForTypes(typeof(DateTime), typeof(TimeSpan));
 
-            var dateTimeMap = SqlMapper.GetTypeMap(typeof (DateTime));
+            var dateTimeMap = SqlMapper.GetTypeMap(typeof(DateTime));
 
             dateTimeMap.Should().NotBeNull();
             dateTimeMap.Should().BeOfType<ColumnTypeMapper>();
 
-            var timeSpanMap = SqlMapper.GetTypeMap(typeof (TimeSpan));
+            var timeSpanMap = SqlMapper.GetTypeMap(typeof(TimeSpan));
 
             timeSpanMap.Should().NotBeNull();
             timeSpanMap.Should().BeOfType<ColumnTypeMapper>();
         }
-
     }
 }

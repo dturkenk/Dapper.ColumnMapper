@@ -41,6 +41,10 @@ local.properties
 *.user
 *.sln.docstates
 
+# Visual Studio configuration directory
+**/.vs/
+**/.vscode/
+
 # Build results
 
 [Dd]ebug/
@@ -130,7 +134,7 @@ publish/
 
 # NuGet Packages Directory
 ## TODO: If you have NuGet Package Restore enabled, uncomment the next line
-#packages/
+**/packages/
 
 # Windows Azure Build Output
 csx

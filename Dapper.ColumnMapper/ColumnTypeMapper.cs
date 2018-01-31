@@ -12,10 +12,10 @@ namespace Dapper.ColumnMapper
         {
             foreach (var type in types)
             {
-                SqlMapper.SetTypeMap(type, new ColumnTypeMapper(type));      
+                SqlMapper.SetTypeMap(type, new ColumnTypeMapper(type));
             }
         }
-        
+
         public ColumnTypeMapper(Type type)
         {
             _internalMapper = new CustomPropertyTypeMap(type, _propertyResolver);
@@ -25,7 +25,7 @@ namespace Dapper.ColumnMapper
         {
             return _internalMapper.FindConstructor(names, types);
         }
-        
+
         public ConstructorInfo FindExplicitConstructor()
         {
             return _internalMapper.FindExplicitConstructor();
