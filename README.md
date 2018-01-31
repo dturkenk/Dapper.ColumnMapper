@@ -42,3 +42,8 @@ Where?
 The easiest way is to use the NuGet package manager from within Visual Studio and install the Dapper.ColumnMapper package.
 
 If you really want to, you can download and build from source.
+
+Acknowledgements
+------------------
+
+Thanks to Andrei Ivascu (@aivascu) for updating the library to .NET standard and new versions of everything.
